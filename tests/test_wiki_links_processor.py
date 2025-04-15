@@ -24,6 +24,59 @@ class WikiLinksProcessorTestCase(unittest.TestCase):
             },
         )
 
+    def test_get_wiki_links_no_space(self):
+        text = "hello[[world]] [[bar|baz]]"
+        links = wiki_links_processor.get_wiki_links(text)
+        self.assertEqual(len(links), 2)
+        self.assertEqual(
+            links[0],
+            {
+                "wiki_link": "[[world]]",
+                "link": "world",
+                "text": "world",
+            },
+        )
+        self.assertEqual(
+            links[1],
+            {
+                "wiki_link": "[[bar|baz]]",
+                "link": "bar",
+                "text": "baz",
+            },
+        )
+
+    def test_get_wiki_link_with_escape(self):
+        wiki_links = wiki_links_processor.get_wiki_links("Hello \\[[world]], [[foo]]")
+        self.assertEqual(len(wiki_links), 1)
+        self.assertEqual(
+            wiki_links[0],
+            {
+                "wiki_link": "[[foo]]",
+                "link": "foo",
+                "text": "foo",
+            },
+        )
+
+    def test_get_wiki_link_with_escaped_backslash(self):
+        wiki_links = wiki_links_processor.get_wiki_links("Hello \\\\[[world]], [[foo]]")
+        self.assertEqual(len(wiki_links), 2)
+        self.assertEqual(
+            wiki_links[0],
+            {
+                "wiki_link": "[[world]]",
+                "link": "world",
+                "text": "world",
+            },
+        )
+        self.assertEqual(
+            wiki_links[1],
+            {
+                "wiki_link": "[[foo]]",
+                "link": "foo",
+                "text": "foo",
+            },
+        )
+
     def test_convert_wiki_link(self):
         wiki_link = wiki_links_processor.get_wiki_links("[[foo]]")[0]
         hugo_link = wiki_links_processor.wiki_link_to_hugo_link(wiki_link)

@@ -7,6 +7,7 @@ import re
 
 
 WikiLink = TypedDict("WikiLink", {"wiki_link": str, "link": str, "text": str})
+WIKI_LINK_PATTERN = re.compile(r"(?:^|(?<=[^\\])|(?<=\\\\))\[\[(.*?)\]\]")
 
 
 def get_wiki_links(text: str) -> List[WikiLink]:
@@ -18,8 +19,7 @@ def get_wiki_links(text: str) -> List[WikiLink]:
     - text: the possible extracted text
     """
     wiki_links = []
-    wiki_link_regex = r"\[\[(.*?)\]\]"
-    for match in re.finditer(wiki_link_regex, text):
+    for match in re.finditer(WIKI_LINK_PATTERN, text):
         out = {
             "wiki_link": match.group(),
         }
