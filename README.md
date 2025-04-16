@@ -41,16 +41,6 @@ It takes care of the following steps:
 | `[[/some/wiki/link#Some Heading\|Some Heading Link]]` | `[Some Heading Link]({{< ref "/some/wiki/link#some-heading" >}})`
 | `==foo bar===` | `<mark>foo bar</mark>`
 
-> **Note**
-> For now, there is *no way to escape* obsidian wiki links. Every link
-> will be replaced with a hugo link. The only way to get around this is changing
-> the wiki link to don't match the exact sytax, for example by adding an
-> [invisible space](https://en.wikipedia.org/wiki/Zero-width_space) (Obsidian will highlight the invisible character as a red dot).
-> ![](https://raw.githubusercontent.com/devidw/obsidian-to-hugo/master/img/do-not-do-that.png)
-> However, this still is really really *not* best
-> practice, so if anyone wants to implement real escaping, [please do
-> so](https://github.com/devidw/obsidian-to-hugo/pulls).
-
 
 ## Installation
 
